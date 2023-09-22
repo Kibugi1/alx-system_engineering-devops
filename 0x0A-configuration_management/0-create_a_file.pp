@@ -1,8 +1,8 @@
-#using puppet to creat a file with few requirements
+# using puppet to creat a file with few requirements
 
 file { '/tmp/school':
   ensure  => file,
-  path    => '/tmp/school'
+  path    => '/tmp/school',
   mode    => '0744',
   owner   => www-data,
   group   => www-data,
