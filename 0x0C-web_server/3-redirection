@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# this scripts installs nginx on my server
+
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+sudo sed -i '53i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' etc/nginx/sites-available/default
+service nginx start
