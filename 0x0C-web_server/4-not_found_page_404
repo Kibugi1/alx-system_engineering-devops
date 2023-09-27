@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# this scripts installs nginx on my server and creates 404 error
+
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' /etc/nginx/sites-available/default
+sudo sed -i 's/=404/@404/g' /etc/nginx/sites-available/default
+sudo service nginx start
