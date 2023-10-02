@@ -1,0 +1,12 @@
+!/usr/bin/env bash
+# this scripts installs nginx on my server and creates 404 error and creates a custom header for http response
+
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;}' /etc/nginx/sites-available/default
+sudo sed -i '/^}$/i \ \n\tlocation @404 {return 404 "Ceci n'\''est pas une page\\n";}' /etc/nginx/sites-available/default
+sudo sed -i 's/=404/@404/g' /etc/nginx/sites-available/default
+sudo sed -i '0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By $hostname;/' /etc/nginx/sites-available/default
+sudo service nginx start
